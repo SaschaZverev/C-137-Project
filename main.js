@@ -8,17 +8,17 @@ function setup()
     canvas.center();
 
     video = createCapture(VIDEO);
+    video.size(480, 380)
     video.hide();
 }
 
 function draw()
 {
-  image(video ,0 ,0, 480, 380);
+  image(video, 0, 0, 480, 380);
   if(s != "")
   {
-      objectDetector.detect(video, gotResults);
-      for(i = 0;i < objects.length;i++)
-      {
+      objectDetector.detect(video, gotResult);
+      for(i = 0;i < objects.length ;i++){
           document.getElementById("status").innerHTML = "Status : Object Detected";
           console.log(objects.length);
           fill("#ff0000");
@@ -28,15 +28,17 @@ function draw()
           stroke("#ff0000");
           rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
 
-          if(objects[i].label == input_text){
+          if(objects[i].label == input_text)
+          {
               video.stop();
-              objectDetector.detect(gotResults);
+              objectDetector.detect(gotResult);
               document.getElementById("object_found").innerHTML = input_text+" Found";
               var synth = window.speechSynthesis;
               var utterThis = new SpeechSynthesisUtterance(input_text + "Found");
               synth.speak(utterThis);
           }
-          else{
+          else
+          {
               document.getElementById("object_found").innerHTML = input_text + " Not Found";
           }
       }
